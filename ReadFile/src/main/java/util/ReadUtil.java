@@ -39,7 +39,7 @@ public class ReadUtil {
 
 	}
 
-	private static Object nameofList() {
+private static Object nameofList() {
 		List<String> list = new ArrayList<String>();
 		if (xssfWorkbook != null) {
 			xssfSheet = xssfWorkbook.getSheetAt(0);
@@ -47,6 +47,7 @@ public class ReadUtil {
 			for (int i = 0; i <=xssfSheet.getLastRowNum(); i++) {
 				String name = xssfSheet.getRow(i).getCell((int) 'H' - 65).toString();
 				if (name.trim().length() > 0) {
+					name = extractUserame(name.trim());
 					list.add(name.trim());
 				}
 			}
@@ -56,6 +57,19 @@ public class ReadUtil {
 			System.out.println(xssfWorkbook);
 		}
 		return list;
+	}
+
+	private static String extractUserame(String trim) {
+		String newStr = "";
+		for(int i=0;i<trim.length();i++)
+		{
+			char ch = trim.charAt(i);
+			if(ch=='@')
+				break;
+			else
+				newStr = newStr + ch;
+		}
+		return newStr;
 	}
 
 }
